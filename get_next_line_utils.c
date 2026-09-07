@@ -6,11 +6,14 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:19:02 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 18:31:56 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static size_t	gnl_strlen(const char *s);
+static void		gnl_resize(char **s, size_t size);
 
 t_string	gnl_create_string(char *str, size_t capacity)
 {
@@ -24,8 +27,6 @@ t_string	gnl_create_string(char *str, size_t capacity)
 
 void	gnl_string_append(t_string *str, char c)
 {
-	size_t	i;
-
 	if (str->len + 1 > str->capacity)
 	{
 		str->capacity *= 2;

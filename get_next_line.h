@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:37:09 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:19:09 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 18:31:27 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_string
 typedef struct s_buffer
 {
 	char	*buf;
-	ssize_t	len;
+	size_t	len;
 	size_t	i;
 }	t_buffer;
 

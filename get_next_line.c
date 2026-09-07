@@ -6,11 +6,13 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:18:42 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 18:30:00 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static char	*gnl_read_line(t_buffer *buf, int fd);
 
 char	*get_next_line(int fd)
 {
