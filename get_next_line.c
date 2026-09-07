@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:14:15 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 18:18:42 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 			if (read_chars <= 0)
 				return (NULL);
 			buf->len = read_chars;
-			buf-> i = 0;
+			buf->i = 0;
 		}
 		while (buf->i < buf->len)
 		{
