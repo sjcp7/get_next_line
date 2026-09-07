@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samupedr <samupedr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 11:28:24 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 15:37:16 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,16 @@ t_string	gnl_create_string(char *str, size_t capacity)
 	return (s);
 }
 
-void	gnl_string_append(t_string *str, char *s)
+void	gnl_string_append(t_string *str, char c)
 {
-	size_t	s_len;
 	size_t	i;
 
-	s_len = gnl_strlen(s);
-	if (s_len + str->len > str->capacity)
+	if (str->len + 1 > str->capacity)
 	{
-		if (s_len + str->len > 2 * str->capacity)
-			str->capacity = s_len + str->len;
-		else
-			str->capacity *= 2;
+		str->capacity *= 2;
 		gnl_resize(&str->s, str->capacity);
 	}
-	i = str->len;
-	while (i - str->len < s_len)
-	{
-		str->s[i] = s[i - str->len];
-		i++;
-	}
-	str->len += s_len;
+	str->s[str->len++] = c;
 }
 
 static size_t	gnl_strlen(const char *s)

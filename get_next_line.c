@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samupedr <samupedr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 11:29:48 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 18:14:15 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,43 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buf;
-	size_t		i;
+	static t_buffer	buf;
+	size_t			i;
 
 	if (fd < 0)
 		return (NULL);
-	buf = (char *)malloc(BUFFER_SIZE + 1);
-	if (!buf)
+	buf.buf = (char *)malloc(BUFFER_SIZE + 1);
+	if (!buf.buf)
 		return (NULL);
 	i = 0;
 	while (i <= BUFFER_SIZE)
-		buf[i++] = '\0';
+		buf.buf[i++] = '\0';
+	buf.i = 0;
+	buf.len = BUFFER_SIZE;
 	return (gnl_read_line(&buf, fd));
 }
 
-static char	*gnl_read_line(char **buf, int fd)
+static char	*gnl_read_line(t_buffer *buf, int fd)
 {
 	t_string	s;
+	ssize_t		read_chars;
 
-	s = gnl_create_string(*buf, BUFFER_SIZE);
-	while (read(fd, *buf, BUFFER_SIZE) > 0)
-		gnl_string_append(&s, gnl_next_chunk(buf));
+	s = gnl_create_string(NULL, BUFFER_SIZE);
+	while (1)
+	{
+		if (buf->i >= buf->len)
+		{
+			read_chars = read(fd, buf->buf, BUFFER_SIZE);
+			if (read_chars <= 0)
+				return (NULL);
+			buf->len = read_chars;
+			buf-> i = 0;
+		}
+		while (buf->i < buf->len)
+		{
+			gnl_string_append(&s, buf->buf[buf->i]);
+			if (buf->buf[buf->i++] == '\n')
+				return (s.s);
+		}
+	}
 }
