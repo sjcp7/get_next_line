@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
+/*   By: samupedr <samupedr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 11:01:27 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/07 11:28:24 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	gnl_string_append(t_string *str, char *s)
 	str->len += s_len;
 }
 
-size_t	gnl_strlen(const char *s)
+static size_t	gnl_strlen(const char *s)
 {
 	size_t	i;
 
@@ -55,7 +55,7 @@ size_t	gnl_strlen(const char *s)
 	return (i);
 }
 
-void	gnl_resize(char **s, size_t size)
+static void	gnl_resize(char **s, size_t size)
 {
 	char	*str;
 	size_t	i;
