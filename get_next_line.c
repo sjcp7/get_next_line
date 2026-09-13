@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/13 14:50:10 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:58:31 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,28 @@ char	*get_next_line(int fd)
 
 	if (fd < 0)
 		return (NULL);
-	buf.buf = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buf.buf)
-		return (NULL);
-	i = 0;
-	while (i <= BUFFER_SIZE)
-		buf.buf[i++] = '\0';
-	buf.i = 0;
-	buf.len = 0;
+	{
+		buf.buf = (char *)malloc(BUFFER_SIZE + 1);
+		if (!buf.buf)
+			return (NULL);
+		i = 0;
+		while (i <= BUFFER_SIZE)
+			buf.buf[i++] = '\0';
+		buf.i = 0;
+		buf.len = 0;
+	}
 	return (gnl_read_line(&buf, fd));
 }
 
 static void	gnl_clear(t_buffer *buf, t_string *str)
 {
 	free(buf->buf);
+	buf->i = 0;
+	buf->len = 0;
 	free(str->s);
+	str->capacity = 0;
+	str->len = 0;
 }
 
 static char	*gnl_read_line(t_buffer *buf, int fd)
