@@ -38,6 +38,7 @@ char	*get_next_line(int fd)
 static void	gnl_clear(t_buffer *buf, t_string *str)
 {
 	free(buf->buf);
+	buf->buf = NULL;
 	buf->i = 0;
 	buf->len = 0;
 	free(str->s);
