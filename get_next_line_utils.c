@@ -35,6 +35,22 @@ t_string	gnl_create_string(char *str, size_t capacity)
 	return (s);
 }
 
+int	gnl_consume(t_buffer *buf, t_string *s, char **line)
+{
+	while (buf->i < buf->len)
+	{
+		if (!gnl_string_append(s, buf->buf[buf->i]))
+			return (0);
+		if (buf->buf[buf->i++] == '\n')
+		{
+			s->s[s->len] = '\0';
+			*line = s->s;
+			return (1);
+		}
+	}
+	return (1);
+}
+
 int	gnl_string_append(t_string *str, char c)
 {
 	if (!str->s)

@@ -37,5 +37,6 @@ typedef struct s_buffer
 char		*get_next_line(int fd);
 t_string	gnl_create_string(char *str, size_t capacity);
 int			gnl_string_append(t_string *str, char c);
+int			gnl_consume(t_buffer *buf, t_string *s, char **line);
 
 #endif

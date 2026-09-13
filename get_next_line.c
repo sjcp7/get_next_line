@@ -51,10 +51,21 @@ static void	gnl_clear(t_buffer *buf, t_string *str)
 	str->len = 0;
 }
 
+static char	*gnl_flush(t_buffer *buf, t_string *s)
+{
+	if (s->len > 0)
+	{
+		s->s[s->len] = '\0';
+		return (gnl_reset(buf), s->s);
+	}
+	return (gnl_clear(buf, s), NULL);
+}
+
 static char	*gnl_read_line(t_buffer *buf, int fd)
 {
 	t_string	s;
 	ssize_t		read_chars;
+	char		*line;
 
 	s = gnl_create_string(NULL, BUFFER_SIZE);
 	if (!s.s)
@@ -65,26 +76,14 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 		{
 			read_chars = read(fd, buf->buf, BUFFER_SIZE);
 			if (read_chars <= 0)
-			{
-				if (s.len > 0)
-				{
-					s.s[s.len] = '\0';
-					return (gnl_reset(buf), s.s);
-				}
-				return (gnl_clear(buf, &s), NULL);
-			}
+				return (gnl_flush(buf, &s));
 			buf->len = read_chars;
 			buf->i = 0;
 		}
-		while (buf->i < buf->len)
-		{
-			if (!gnl_string_append(&s, buf->buf[buf->i]))
-				return (gnl_clear(buf, &s), NULL);
-			if (buf->buf[buf->i++] == '\n')
-			{
-				s.s[s.len] = '\0';
-				return (s.s);
-			}
-		}
+		line = NULL;
+		if (!gnl_consume(buf, &s, &line))
+			return (gnl_clear(buf, &s), NULL);
+		if (line)
+			return (line);
 	}
 }
