@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/13 14:24:38 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:30:18 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,16 @@ static void	gnl_resize(char **s, size_t size)
 	char	*str;
 	size_t	i;
 
-	str = (char *)malloc(size);
+	str = (char *)malloc(size + 1);
 	if (!str)
 		return ;
 	i = 0;
-	while (s[i])
+	while (*s[i])
 	{
 		str[i] = *s[i];
 		i++;
 	}
-	while (i < size)
+	while (i <= size)
 		str[i++] = '\0';
 	free(*s);
 	*s = str;
