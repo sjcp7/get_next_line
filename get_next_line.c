@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:30:00 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:34:44 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_next_line(int fd)
 	while (i <= BUFFER_SIZE)
 		buf.buf[i++] = '\0';
 	buf.i = 0;
-	buf.len = BUFFER_SIZE;
+	buf.len = 0;
 	return (gnl_read_line(&buf, fd));
 }
 
