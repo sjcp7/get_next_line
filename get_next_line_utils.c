@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:31:56 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:24:38 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,20 @@ static void		gnl_resize(char **s, size_t size);
 t_string	gnl_create_string(char *str, size_t capacity)
 {
 	t_string	s;
+	size_t		i;
 
 	s.s = str;
 	s.capacity = capacity;
 	s.len = gnl_strlen(str);
+	if (!str)
+	{
+		s.s = (char *)malloc(capacity + 1);
+		if (!s.s)
+			return (s);
+		i = 0;
+		while (i <= capacity)
+			s.s[i++] = '\0';		
+	}
 	return (s);
 }
 
