@@ -35,12 +35,17 @@ char	*get_next_line(int fd)
 	return (gnl_read_line(&buf, fd));
 }
 
-static void	gnl_clear(t_buffer *buf, t_string *str)
+static void	gnl_reset(t_buffer *buf)
 {
 	free(buf->buf);
 	buf->buf = NULL;
 	buf->i = 0;
 	buf->len = 0;
+}
+
+static void	gnl_clear(t_buffer *buf, t_string *str)
+{
+	gnl_reset(buf);
 	free(str->s);
 	str->capacity = 0;
 	str->len = 0;
@@ -58,7 +63,14 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 		{
 			read_chars = read(fd, buf->buf, BUFFER_SIZE);
 			if (read_chars <= 0)
+			{
+				if (s.len > 0)
+				{
+					s.s[s.len] = '\0';
+					return (gnl_reset(buf), s.s);
+				}
 				return (gnl_clear(buf, &s), NULL);
+			}
 			buf->len = read_chars;
 			buf->i = 0;
 		}
