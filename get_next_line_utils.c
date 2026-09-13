@@ -64,9 +64,9 @@ static void	gnl_resize(char **s, size_t size)
 	if (!str)
 		return ;
 	i = 0;
-	while (*s[i])
+	while ((*s)[i])
 	{
-		str[i] = *s[i];
+		str[i] = (*s)[i];
 		i++;
 	}
 	while (i <= size)
