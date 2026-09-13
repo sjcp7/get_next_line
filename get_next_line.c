@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/13 14:34:44 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/09/13 14:50:10 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ char	*get_next_line(int fd)
 	return (gnl_read_line(&buf, fd));
 }
 
+static void	gnl_clear(t_buffer *buf, t_string *str)
+{
+	free(buf->buf);
+	free(str->s);
+}
+
 static char	*gnl_read_line(t_buffer *buf, int fd)
 {
 	t_string	s;
@@ -44,7 +50,7 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 		{
 			read_chars = read(fd, buf->buf, BUFFER_SIZE);
 			if (read_chars <= 0)
-				return (NULL);
+				return (gnl_clear(buf, &s), NULL);
 			buf->len = read_chars;
 			buf->i = 0;
 		}
@@ -52,7 +58,10 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 		{
 			gnl_string_append(&s, buf->buf[buf->i]);
 			if (buf->buf[buf->i++] == '\n')
+			{
+				s.s[s.len] = '\0';
 				return (s.s);
+			}
 		}
 	}
 }
