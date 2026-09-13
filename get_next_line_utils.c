@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 
 static size_t	gnl_strlen(const char *s);
-static void		gnl_resize(char **s, size_t size);
+static int		gnl_resize(char **s, size_t size);
 
 t_string	gnl_create_string(char *str, size_t capacity)
 {
@@ -35,14 +35,18 @@ t_string	gnl_create_string(char *str, size_t capacity)
 	return (s);
 }
 
-void	gnl_string_append(t_string *str, char c)
+int	gnl_string_append(t_string *str, char c)
 {
+	if (!str->s)
+		return (0);
 	if (str->len + 1 > str->capacity)
 	{
+		if (!gnl_resize(&str->s, str->capacity * 2))
+			return (0);
 		str->capacity *= 2;
-		gnl_resize(&str->s, str->capacity);
 	}
 	str->s[str->len++] = c;
+	return (1);
 }
 
 static size_t	gnl_strlen(const char *s)
@@ -55,14 +59,14 @@ static size_t	gnl_strlen(const char *s)
 	return (i);
 }
 
-static void	gnl_resize(char **s, size_t size)
+static int	gnl_resize(char **s, size_t size)
 {
 	char	*str;
 	size_t	i;
 
 	str = (char *)malloc(size + 1);
 	if (!str)
-		return ;
+		return (0);
 	i = 0;
 	while ((*s)[i])
 	{
@@ -73,4 +77,5 @@ static void	gnl_resize(char **s, size_t size)
 		str[i++] = '\0';
 	free(*s);
 	*s = str;
+	return (1);
 }

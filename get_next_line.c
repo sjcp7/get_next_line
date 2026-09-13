@@ -57,6 +57,8 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 	ssize_t		read_chars;
 
 	s = gnl_create_string(NULL, BUFFER_SIZE);
+	if (!s.s)
+		return (NULL);
 	while (1)
 	{
 		if (buf->i >= buf->len)
@@ -76,7 +78,8 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 		}
 		while (buf->i < buf->len)
 		{
-			gnl_string_append(&s, buf->buf[buf->i]);
+			if (!gnl_string_append(&s, buf->buf[buf->i]))
+				return (gnl_clear(buf, &s), NULL);
 			if (buf->buf[buf->i++] == '\n')
 			{
 				s.s[s.len] = '\0';
