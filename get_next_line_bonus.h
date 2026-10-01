@@ -1,0 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/03 14:37:09 by samupedr          #+#    #+#             */
+/*   Updated: 2026/10/01 12:48:31 by samupedr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 4096
+# endif
+
+# define MAX_NUM_FD 10000
+
+# include <stdlib.h>
+# include <unistd.h>
+
+typedef struct s_string
+{
+	char	*s;
+	size_t	capacity;
+	size_t	len;
+}	t_string;
+
+typedef struct s_buffer
+{
+	char	*buf;
+	size_t	len;
+	size_t	i;
+}	t_buffer;
+
+char		*get_next_line(int fd);
+t_string	gnl_create_string(char *str, size_t capacity);
+void		gnl_string_append(t_string *str, char c);
+
+#endif
