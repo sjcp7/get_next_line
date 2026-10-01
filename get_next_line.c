@@ -6,13 +6,14 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:30:00 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/10/01 15:31:52 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 static char	*gnl_read_line(t_buffer *buf, int fd);
+static void	gnl_cleanup(t_buffer *buf, t_string *s);
 
 char	*get_next_line(int fd)
 {
@@ -40,11 +41,13 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 	s = gnl_create_string(NULL, BUFFER_SIZE);
 	while (1)
 	{
-		if (buf->i >= buf->len)
+		if (!buf->buf[0] || buf->i >= buf->len)
 		{
 			read_chars = read(fd, buf->buf, BUFFER_SIZE);
-			if (read_chars <= 0)
-				return (NULL);
+			if (read_chars == 0)
+				return (free(buf->buf), NULL);
+			else if (read_chars < 0)
+				return (gnl_cleanup(buf, &s), NULL);
 			buf->len = read_chars;
 			buf->i = 0;
 		}
@@ -55,4 +58,10 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 				return (s.s);
 		}
 	}
+}
+
+static void	gnl_cleanup(t_buffer *buf, t_string *s)
+{
+	free(buf->buf);
+	free(s->s);
 }
