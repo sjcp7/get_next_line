@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:37:09 by samupedr          #+#    #+#             */
-/*   Updated: 2026/09/07 18:31:27 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/10/01 18:33:16 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ typedef struct s_buffer
 
 char		*get_next_line(int fd);
 t_string	gnl_create_string(char *str, size_t capacity);
-void		gnl_string_append(t_string *str, char c);
+int			gnl_string_append(t_string *str, char c);
 
 #endif

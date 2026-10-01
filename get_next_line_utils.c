@@ -6,14 +6,14 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/10/01 18:22:45 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/10/01 18:37:38 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 static size_t	gnl_strlen(const char *s);
-static void		gnl_string_resize(t_string *s, size_t size);
+static int		gnl_string_resize(t_string *s, size_t size);
 
 t_string	gnl_create_string(char *str, size_t capacity)
 {
@@ -25,14 +25,19 @@ t_string	gnl_create_string(char *str, size_t capacity)
 	return (s);
 }
 
-void	gnl_string_append(t_string *str, char c)
+int	gnl_string_append(t_string *str, char c)
 {
 	if (!str->s)
-		gnl_string_resize(str, str->capacity);
+	{
+		if (!gnl_string_resize(str, str->capacity))
+			return (0);
+	}
 	else if (str->len + 1 > str->capacity)
-		gnl_string_resize(str, str->capacity * 2);
+		if (!gnl_string_resize(str, str->capacity * 2))
+			return (0);
 	str->s[str->len++] = c;
 	str->s[str->len] = '\0';
+	return (1);
 }
 
 static size_t	gnl_strlen(const char *s)
@@ -45,14 +50,14 @@ static size_t	gnl_strlen(const char *s)
 	return (i);
 }
 
-static void	gnl_string_resize(t_string *s, size_t size)
+static int	gnl_string_resize(t_string *s, size_t size)
 {
 	char	*str;
 	size_t	i;
 
 	str = (char *)malloc(size + 1);
 	if (!str)
-		return ;
+		return (0);
 	i = 0;
 	while (i < s->len)
 	{
@@ -63,4 +68,5 @@ static void	gnl_string_resize(t_string *s, size_t size)
 	free(s->s);
 	s->s = str;
 	s->capacity = size;
+	return (1);
 }

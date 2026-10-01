@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 14:49:17 by samupedr          #+#    #+#             */
-/*   Updated: 2026/10/01 18:17:55 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/10/01 18:26:34 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static char	*gnl_read_line(t_buffer *buf, int fd)
 		}
 		while (buf->i < buf->len)
 		{
-			gnl_string_append(&s, buf->buf[buf->i]);
+			if (!gnl_string_append(&s, buf->buf[buf->i]))
+				return (gnl_cleanup(buf, &s), NULL);
 			if (buf->buf[buf->i++] == '\n')
 				return (s.s);
 		}
