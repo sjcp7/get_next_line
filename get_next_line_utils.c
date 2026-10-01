@@ -6,7 +6,7 @@
 /*   By: samupedr <samupedr@student.42luanda.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/03 15:25:52 by samupedr          #+#    #+#             */
-/*   Updated: 2026/10/01 15:31:11 by samupedr         ###   ########.fr       */
+/*   Updated: 2026/10/01 18:22:45 by samupedr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	gnl_string_append(t_string *str, char c)
 	else if (str->len + 1 > str->capacity)
 		gnl_string_resize(str, str->capacity * 2);
 	str->s[str->len++] = c;
+	str->s[str->len] = '\0';
 }
 
 static size_t	gnl_strlen(const char *s)
@@ -58,9 +59,8 @@ static void	gnl_string_resize(t_string *s, size_t size)
 		str[i] = s->s[i];
 		i++;
 	}
-	while (i <= size)
-		str[i++] = '\0';
+	str[i] = '\0';
 	free(s->s);
 	s->s = str;
-	s->capacity = size + 1;
+	s->capacity = size;
 }
